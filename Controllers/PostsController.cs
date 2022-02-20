@@ -13,8 +13,16 @@ public class PostsController : Controller
     [HttpPost]
     public IActionResult Create([Bind("Title", "Text", "Status")] Post post)
     {
-        Console.WriteLine(post.Text + " " + post.Title);
-        return RedirectToAction("Test");
+        if (ModelState.IsValid)
+        {
+            // go ahead and save it into the database
+            // redirectToAction()
+
+        }
+
+        return View();
+        // Console.WriteLine(post.Text + " " + post.Title);
+        // return RedirectToAction("Test");
     }
 
 
