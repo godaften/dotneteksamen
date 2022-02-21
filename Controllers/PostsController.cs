@@ -12,6 +12,12 @@ public class PostsController : Controller
         this._context = context;
     }
 
+    public IActionResult Index()
+    {
+        IEnumerable<Post> posts = _context.Posts.ToList();
+        return View(posts);
+    }
+
     public IActionResult Create()
     {
         return View();
@@ -27,8 +33,7 @@ public class PostsController : Controller
             post.Created = DateTime.Now;
             _context.Posts.Add(post);
             _context.SaveChanges();
-
-
+            return RedirectToAction("Index");
         }
 
         return View();
