@@ -41,6 +41,25 @@ public class PostsController : Controller
         // return RedirectToAction("Test");
     }
 
+    public IActionResult Edit(int id)
+    {
+        Post p = _context.Posts.Find(id);
+        return View(p);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(int id, [Bind("Id", "Title", "Text", "Status")] Post post)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Posts.Update(post);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        return View();
+    }
+
 
     public IActionResult Test()
     {
