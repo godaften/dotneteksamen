@@ -1,45 +1,41 @@
 @model IEnumerable<cbsStudents.Models.Entities.Post>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Text)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="d-flex justify-content-between">
+    <h4>Posts</h4>
+    <a class="btn btn-primary" asp-action="create">New Post</a>
+</div>
+
+
+
+<form asp-controller="Posts" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="SearchString" value="@ViewBag.SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 col-md-2">Title</div>
+        <div class="d-none d-md-block col-md-6 ">Text</div>
+        <div class="col-2 col-md-1">Created</div>
+        <div class="col-2 col-md-1">Activity</div>
+        <div class="col-1">Status</div>
+        <div class="col-1"></div>
+    </div>
+    @foreach (var post in Model)
+    {
+        <div class="row grid-row">
+            <div class="col-6 col-md-2">@Html.DisplayFor(x => post.Title)</div>
+            <div class="d-none d-md-block col-md-6">@Html.DisplayFor(x => post.Text)</div>
+            <div class="col-2 col-md-1">@Html.DisplayFor(x => post.Created)</div>
+            <div class="col-2 col-md-1"></div>
+            <div class="col-1"><span class="badge bg-dark text-dark">@Html.DisplayFor(x => post.Status)</span></div>
+            <div class="col-1"><a class="btn btn-secondary" asp-action="Edit" asp-route-id="@post.Id">Edit</a></div>
+        </div>
+    }
+</div>
