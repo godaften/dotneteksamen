@@ -37,6 +37,36 @@ namespace cbsStudents.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Comment");
+
+                    b.HasData(
+                        new
+                        {
+                            CommentId = 1,
+                            PostId = 1,
+                            Text = "Hello",
+                            TimeStamp = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6720)
+                        },
+                        new
+                        {
+                            CommentId = 2,
+                            PostId = 1,
+                            Text = "Hello again",
+                            TimeStamp = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730)
+                        },
+                        new
+                        {
+                            CommentId = 3,
+                            PostId = 2,
+                            Text = "Hi",
+                            TimeStamp = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730)
+                        },
+                        new
+                        {
+                            CommentId = 4,
+                            PostId = 3,
+                            Text = "Bye",
+                            TimeStamp = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730)
+                        });
                 });
 
             modelBuilder.Entity("cbsStudents.Models.Entities.Post", b =>
@@ -62,6 +92,32 @@ namespace cbsStudents.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6570),
+                            Status = 0,
+                            Text = "This is post 1",
+                            Title = "Post no 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6610),
+                            Status = 0,
+                            Text = "This is post 2",
+                            Title = "Post no 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6610),
+                            Status = 0,
+                            Text = "This is post 3",
+                            Title = "Post no 3"
+                        });
                 });
 
             modelBuilder.Entity("cbsStudents.Models.Entities.Comment", b =>
