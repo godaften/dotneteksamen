@@ -20,5 +20,7 @@ public class Post
 
     public PostStatus Status { get; set; }
 
+    public List<Comment> Comments { get; set; }
+
 }
 
