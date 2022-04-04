@@ -1,13 +1,19 @@
 using CbsStudents.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<CbsStudentsContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("CbsStudentsContext")));
+
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+.AddDefaultUI()
+.AddEntityFrameworkStores<CbsStudentsContext>();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -23,9 +29,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

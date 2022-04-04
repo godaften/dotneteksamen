@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using cbsStudents.Models.Entities;
 using CbsStudents.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace cbsStudents.Controllers;
 
+[Authorize]
 public class PostsController : Controller
 {
     private CbsStudentsContext _context;
+
     public PostsController(CbsStudentsContext context)
     {
         this._context = context;
     }
 
+    [AllowAnonymous]
     public IActionResult Index()
     {
         IEnumerable<Post> posts = _context.Posts.ToList();

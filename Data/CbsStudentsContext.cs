@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using cbsStudents.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CbsStudents.Data
 {
-    public class CbsStudentsContext : DbContext
+    public class CbsStudentsContext : IdentityDbContext
     {
         public CbsStudentsContext(DbContextOptions<CbsStudentsContext> options)
             : base(options)
