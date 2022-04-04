@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace cbsStudents.Models.Entities;
 
@@ -10,5 +11,9 @@ public class Comment
 
     public int PostId { get; set; }
     public Post Post { get; set; }
+
+    public string UserId { get; set; }
+    public IdentityUser? User { get; set; }
+
 
 }
