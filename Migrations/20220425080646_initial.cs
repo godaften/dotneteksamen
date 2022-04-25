@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cbsStudents.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -154,54 +154,99 @@ namespace cbsStudents.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 1,
-                column: "TimeStamp",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7900));
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Text = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 2,
-                column: "TimeStamp",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7910));
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PostId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comment_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 3,
-                column: "TimeStamp",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7920));
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1", 0, "ea6e0e8b-5c42-49dd-81a4-4e2d51402328", "chrk@kea.dk", true, false, null, null, null, "AQAAAAEAACcQAAAAEAtw7H60mzjhPwaZ+NqRkAjZ4aeSde5fu3YGLSI94/mU/6WuVkBLkykIKECj4a1BxQ==", null, false, "3022a109-4222-44bc-a24c-7af9e69df2d8", false, "chrk@kea.dk" });
 
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 4,
-                column: "TimeStamp",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7920));
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "2", 0, "6dc398c9-9202-49b1-b82a-b5e1efd6838b", "test@kea.dk", true, false, null, null, null, "AQAAAAEAACcQAAAAEJJ6LmqTnZ+ADQg+V3hgbbOL7y45YvStRo+ySZYGZIEFjHcV0qG8c3I5x06VKudZ1Q==", null, false, "26034978-c05a-40e5-92d2-3a5262682eb6", false, "test@kea.dk" });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Posts",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Created",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7560));
+                columns: new[] { "Id", "Created", "Status", "Text", "Title", "UserId" },
+                values: new object[] { 1, new DateTime(2022, 4, 25, 10, 6, 46, 739, DateTimeKind.Local).AddTicks(9980), 0, "This is post 1", "Post no 1", null });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Posts",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Created",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7600));
+                columns: new[] { "Id", "Created", "Status", "Text", "Title", "UserId" },
+                values: new object[] { 2, new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(30), 0, "This is post 2", "Post no 2", null });
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Posts",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Created",
-                value: new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7600));
+                columns: new[] { "Id", "Created", "Status", "Text", "Title", "UserId" },
+                values: new object[] { 3, new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(30), 0, "This is post 3", "Post no 3", null });
+
+            migrationBuilder.InsertData(
+                table: "Comment",
+                columns: new[] { "CommentId", "PostId", "Text", "TimeStamp", "UserId" },
+                values: new object[] { 1, 1, "Hello", new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(50), "1" });
+
+            migrationBuilder.InsertData(
+                table: "Comment",
+                columns: new[] { "CommentId", "PostId", "Text", "TimeStamp", "UserId" },
+                values: new object[] { 2, 1, "Hello again", new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60), "2" });
+
+            migrationBuilder.InsertData(
+                table: "Comment",
+                columns: new[] { "CommentId", "PostId", "Text", "TimeStamp", "UserId" },
+                values: new object[] { 3, 2, "Hi", new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60), "1" });
+
+            migrationBuilder.InsertData(
+                table: "Comment",
+                columns: new[] { "CommentId", "PostId", "Text", "TimeStamp", "UserId" },
+                values: new object[] { 4, 3, "Bye", new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60), "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -239,6 +284,21 @@ namespace cbsStudents.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_PostId",
+                table: "Comment",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_UserId",
+                table: "Comment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                table: "Posts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -259,59 +319,16 @@ namespace cbsStudents.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 1,
-                column: "TimeStamp",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6720));
-
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 2,
-                column: "TimeStamp",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730));
-
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 3,
-                column: "TimeStamp",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730));
-
-            migrationBuilder.UpdateData(
-                table: "Comment",
-                keyColumn: "CommentId",
-                keyValue: 4,
-                column: "TimeStamp",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6730));
-
-            migrationBuilder.UpdateData(
-                table: "Posts",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Created",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6570));
-
-            migrationBuilder.UpdateData(
-                table: "Posts",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Created",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6610));
-
-            migrationBuilder.UpdateData(
-                table: "Posts",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Created",
-                value: new DateTime(2022, 3, 28, 9, 30, 48, 334, DateTimeKind.Local).AddTicks(6610));
         }
     }
 }

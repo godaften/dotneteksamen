@@ -20,15 +20,25 @@ public class PostsController : Controller
     }
 
     [AllowAnonymous]
-    public IActionResult Index()
+    public IActionResult Index(string SearchString = "")
     {
-        // var posts = from p in _context.Posts select p;
+        if (SearchString == null)
+        {
+            SearchString = "";
+        }
+        var posts = from p in _context.Posts select p;
 
-        var posts = _context.Posts.Include(y => y.User).ToList();
-        // posts = posts.Include(y => y.User);
+        posts = posts.Where(x => x.Title.Contains(SearchString) ||
+            x.Text.Contains(SearchString)).Include(y => y.User);
 
-        // IEnumerable<Post> posts = _context.Posts.ToList();
-        return View(posts);
+        // ViewBag.SearchString = SearchString;
+        var vm = new PostIndexVm
+        {
+            Posts = posts.ToList(),
+            SearchString = SearchString
+        };
+
+        return View(vm);
     }
 
     public IActionResult Create()
@@ -59,7 +69,9 @@ public class PostsController : Controller
 
     public IActionResult Edit(int id)
     {
-        Post p = _context.Posts.Find(id);
+        Post p = _context.Posts.Include(x => x.Comments).ThenInclude(x => x.User)
+            .First(x => x.Id == id);
+
         return View(p);
     }
 

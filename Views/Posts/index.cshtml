@@ -1,4 +1,4 @@
-@model IEnumerable<cbsStudents.Models.Entities.Post>
+@model cbsStudents.Models.Entities.PostIndexVm
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
 
 <form asp-controller="Posts" asp-action="Index" method="get">
     <p>
-        Title: <input type="text" name="SearchString" value="@ViewBag.SearchString" />
+        Title: <input type="text" name="SearchString" value=@Model.SearchString />
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -27,7 +27,7 @@
         <div class="col-1">Status</div>
         <div class="col-1"></div>
     </div>
-    @foreach (var post in Model)
+    @foreach (var post in Model.Posts)
     {
         <div class="row grid-row">
             <div class="col-6 col-md-2">@Html.DisplayFor(x => post.Title)</div>

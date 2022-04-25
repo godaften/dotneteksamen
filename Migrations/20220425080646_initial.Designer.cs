@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace cbsStudents.Migrations
 {
     [DbContext(typeof(CbsStudentsContext))]
-    [Migration("20220404071506_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20220425080646_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,14 @@ namespace cbsStudents.Migrations
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comment");
 
@@ -46,28 +51,32 @@ namespace cbsStudents.Migrations
                             CommentId = 1,
                             PostId = 1,
                             Text = "Hello",
-                            TimeStamp = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7900)
+                            TimeStamp = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(50),
+                            UserId = "1"
                         },
                         new
                         {
                             CommentId = 2,
                             PostId = 1,
                             Text = "Hello again",
-                            TimeStamp = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7910)
+                            TimeStamp = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60),
+                            UserId = "2"
                         },
                         new
                         {
                             CommentId = 3,
                             PostId = 2,
                             Text = "Hi",
-                            TimeStamp = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7920)
+                            TimeStamp = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60),
+                            UserId = "1"
                         },
                         new
                         {
                             CommentId = 4,
                             PostId = 3,
                             Text = "Bye",
-                            TimeStamp = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7920)
+                            TimeStamp = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(60),
+                            UserId = "1"
                         });
                 });
 
@@ -91,7 +100,12 @@ namespace cbsStudents.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
 
@@ -99,7 +113,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7560),
+                            Created = new DateTime(2022, 4, 25, 10, 6, 46, 739, DateTimeKind.Local).AddTicks(9980),
                             Status = 0,
                             Text = "This is post 1",
                             Title = "Post no 1"
@@ -107,7 +121,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7600),
+                            Created = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(30),
                             Status = 0,
                             Text = "This is post 2",
                             Title = "Post no 2"
@@ -115,7 +129,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 4, 4, 9, 15, 6, 112, DateTimeKind.Local).AddTicks(7600),
+                            Created = new DateTime(2022, 4, 25, 10, 6, 46, 740, DateTimeKind.Local).AddTicks(30),
                             Status = 0,
                             Text = "This is post 3",
                             Title = "Post no 3"
@@ -233,6 +247,36 @@ namespace cbsStudents.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ea6e0e8b-5c42-49dd-81a4-4e2d51402328",
+                            Email = "chrk@kea.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEAtw7H60mzjhPwaZ+NqRkAjZ4aeSde5fu3YGLSI94/mU/6WuVkBLkykIKECj4a1BxQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3022a109-4222-44bc-a24c-7af9e69df2d8",
+                            TwoFactorEnabled = false,
+                            UserName = "chrk@kea.dk"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6dc398c9-9202-49b1-b82a-b5e1efd6838b",
+                            Email = "test@kea.dk",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEJJ6LmqTnZ+ADQg+V3hgbbOL7y45YvStRo+ySZYGZIEFjHcV0qG8c3I5x06VKudZ1Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "26034978-c05a-40e5-92d2-3a5262682eb6",
+                            TwoFactorEnabled = false,
+                            UserName = "test@kea.dk"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -322,7 +366,22 @@ namespace cbsStudents.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("cbsStudents.Models.Entities.Post", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

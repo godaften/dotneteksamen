@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CbsStudentsContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("CbsStudentsContext")));
 
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 .AddDefaultUI()
